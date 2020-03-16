@@ -125,13 +125,13 @@ This method returns [a JSON object](https://bankly.readme.io/reference#testinput
 You can get a list of banks and payment institutions with respective codes from the Central Bank (Bacen). No authentication is needed. You can either call this getter from your instance:
 
 ```php
-$banks = bankly.bankList;
+$banks = bankly->bankList;
 ```
 
 Or use this static method directly (no class instancing needed):
 
 ```php
-$banks = Bankly.bankList();
+$banks = Bankly::bankList();
 ```
 
 This returns [a JSON array](https://bankly.readme.io/reference#banklist). You can also perform this request using your browser by [clicking here](https://api.bankly.com.br/baas/banklist).
