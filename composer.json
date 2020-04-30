@@ -1,0 +1,20 @@
+{
+    "name": "jesobreira/bankly",
+    "description": "PHP SDK for Bankly (Acesso)",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "authors": [
+        {
+            "name": "Jefrey Santos",
+            "email": "jefrey.santos@capitual.io"
+        }
+    ],
+    "keywords": ["bank", "baas"],
+    "require": {},
+    "autoload": {
+        "psr-4": {"\\BanklyPHP\\": "src/"}
+    }
+}

@@ -1,44 +1,11 @@
 <?php
 
-define('BANKLY_API_ENDPOINT', 'https://api.acessobank.com.br/baas');
-define('BANKLY_LOGIN_ENDPOINT', 'https://login.acessobank.com.br');
-
-function bankly_get_banklist() {
-	if (function_exists('curl_init')) {
-			$ch = curl_init();
-
-			curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . '/banklist');
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			
-			$req = curl_exec($ch);
-			$err = curl_error($ch);
-
-			if ($err)
-				throw $err;
-			else {
-				$req = json_decode($req);
-				return $req;
-			}
-		} else {
-			$req = file_get_contents(BANKLY_API_ENDPOINT . '/banklist');
-
-			if ($req) {
-				return json_decode($req);
-			} else {
-				throw new Error("Unable to request");
-			}
-		}
-}
-
-class BankAccount extends stdClass {
-	public $bankCode = '332';
-	public $branch;
-	public $account;
-	public $document;
-	public $name;
-}
+namespace BanklyPHP;
 
 class Bankly {
+	static $API_ENDPOINT = 'https://api.acessobank.com.br/baas';
+	static $LOGIN_ENDPOINT = 'https://login.acessobank.com.br';
+
 	private $client_id;
 	private $client_secret;
 	private $token_expiry = 0;
@@ -333,5 +300,32 @@ class Bankly {
 
 	static function bankList() {
 		return bankly_get_banklist();
+	}
+}
+
+function bankly_get_banklist() {
+	if (function_exists('curl_init')) {
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . '/banklist');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		
+		$req = curl_exec($ch);
+		$err = curl_error($ch);
+
+		if ($err)
+			throw $err;
+		else {
+			$req = json_decode($req);
+			return $req;
+		}
+	} else {
+		$req = file_get_contents(BANKLY_API_ENDPOINT . '/banklist');
+
+		if ($req) {
+			return json_decode($req);
+		} else {
+			throw new Error("Unable to request");
+		}
 	}
 }

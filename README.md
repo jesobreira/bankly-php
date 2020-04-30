@@ -12,8 +12,13 @@ Authentication and token refreshing is handled by the class itself.
 
 Start by including the class and creating an instance supplying your client_id and client_secret provided by Acesso.
 
+```
+composer require jesobreira/bankly-php
+```
+
 ```php
-require_once 'bankly.php';
+use BanklyPHP\Bankly;
+use BanklyPHP\BankAccount;
 ```
 
 ```php
