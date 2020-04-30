@@ -38,7 +38,7 @@ class Bankly {
 		if (function_exists('curl_init')) {
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . $endpoint . '?' . http_build_query($variables));
+			curl_setopt($ch, CURLOPT_URL, self::$API_ENDPOINT . $endpoint . '?' . http_build_query($variables));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 				'Authorization: Bearer ' . $this->token,
@@ -64,7 +64,7 @@ class Bankly {
 				)
 			));
 
-			$req = file_get_contents(BANKLY_API_ENDPOINT . $endpoint . '?' . http_build_query($variables), false, $ctx);
+			$req = file_get_contents(self::$API_ENDPOINT . $endpoint . '?' . http_build_query($variables), false, $ctx);
 
 			if ($req) {
 				return json_decode($req);
@@ -83,7 +83,7 @@ class Bankly {
 		if (function_exists('curl_init')) {
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . $endpoint);
+			curl_setopt($ch, CURLOPT_URL, self::$API_ENDPOINT . $endpoint);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($variables));
@@ -115,7 +115,7 @@ class Bankly {
 				)
 			));
 
-			$req = file_get_contents(BANKLY_API_ENDPOINT . $endpoint, false, $ctx);
+			$req = file_get_contents(self::$API_ENDPOINT . $endpoint, false, $ctx);
 
 			if ($req) {
 				return json_decode($req);
@@ -134,7 +134,7 @@ class Bankly {
 		if (function_exists('curl_init')) {
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . $endpoint);
+			curl_setopt($ch, CURLOPT_URL, self::$API_ENDPOINT . $endpoint);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($variables));
@@ -166,7 +166,7 @@ class Bankly {
 				)
 			));
 
-			$req = file_get_contents(BANKLY_API_ENDPOINT . $endpoint, false, $ctx);
+			$req = file_get_contents(self::$API_ENDPOINT . $endpoint, false, $ctx);
 
 			if ($req) {
 				return json_decode($req);
@@ -182,7 +182,7 @@ class Bankly {
 		if (function_exists('curl_init')) {
 			$ch = curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, BANKLY_LOGIN_ENDPOINT . '/connect/token');
+			curl_setopt($ch, CURLOPT_URL, self::$LOGIN_ENDPOINT . '/connect/token');
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
 				'grant_type' => 'client_credentials',
@@ -221,7 +221,7 @@ class Bankly {
 				)
 			));
 
-			$req = file_get_contents(BANKLY_LOGIN_ENDPOINT . '/connect/token', false, $ctx);
+			$req = file_get_contents(self::$LOGIN_ENDPOINT . '/connect/token', false, $ctx);
 
 			if ($req) {
 				$req = json_decode($req);
@@ -307,7 +307,7 @@ function bankly_get_banklist() {
 	if (function_exists('curl_init')) {
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, BANKLY_API_ENDPOINT . '/banklist');
+		curl_setopt($ch, CURLOPT_URL, Bankly::$API_ENDPOINT . '/banklist');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
 		$req = curl_exec($ch);
@@ -320,7 +320,7 @@ function bankly_get_banklist() {
 			return $req;
 		}
 	} else {
-		$req = file_get_contents(BANKLY_API_ENDPOINT . '/banklist');
+		$req = file_get_contents(Bankly::$API_ENDPOINT . '/banklist');
 
 		if ($req) {
 			return json_decode($req);
