@@ -307,7 +307,7 @@ function bankly_get_banklist() {
 	if (function_exists('curl_init')) {
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, Bankly::$API_ENDPOINT . '/banklist');
+		curl_setopt($ch, CURLOPT_URL, 'https://api.bankly.com.br/baas/banklist');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
 		$req = curl_exec($ch);
@@ -320,7 +320,7 @@ function bankly_get_banklist() {
 			return $req;
 		}
 	} else {
-		$req = file_get_contents(Bankly::$API_ENDPOINT . '/banklist');
+		$req = file_get_contents('https://api.bankly.com.br/baas/banklist');
 
 		if ($req) {
 			return json_decode($req);
