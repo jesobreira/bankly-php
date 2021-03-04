@@ -3,8 +3,8 @@
 namespace BanklyPHP;
 
 class Bankly {
-	static $API_ENDPOINT = 'https://api.acessobank.com.br/baas';
-	static $LOGIN_ENDPOINT = 'https://login.acessobank.com.br';
+	static $API_ENDPOINT = 'https://api.bankly.com.br';
+	static $LOGIN_ENDPOINT = 'https://login.bankly.com.br';
 
 	private $client_id;
 	private $client_secret;
@@ -29,7 +29,7 @@ class Bankly {
 	    );
 	}
 
-	private function _get($endpoint, $variables = array()) {
+	public function _get($endpoint, $variables = array()) {
 		if (time() > $this->token_expiry) {
 			call_user_func($this->debug, "Token has expired");
 			$this->_doAuth();
@@ -74,7 +74,7 @@ class Bankly {
 		}
 	}
 
-	private function _post($endpoint, $variables = array()) {
+	public function _post($endpoint, $variables = array()) {
 		if (time() > $this->token_expiry) {
 			call_user_func($this->debug, "Token has expired");
 			$this->_doAuth();
@@ -125,7 +125,7 @@ class Bankly {
 		}
 	}
 
-	private function _postJSON($endpoint, $variables = array()) {
+	public function _postJSON($endpoint, $variables = array()) {
 		if (time() > $this->token_expiry) {
 			call_user_func($this->debug, "Token has expired");
 			$this->_doAuth();
@@ -292,40 +292,7 @@ class Bankly {
 		));
 	}
 
-	public function __get($property) {
-		if ($property === 'bankList') {
-			return bankly_get_banklist();
-		}
-	}
-
-	static function bankList() {
-		return bankly_get_banklist();
-	}
-}
-
-function bankly_get_banklist() {
-	if (function_exists('curl_init')) {
-		$ch = curl_init();
-
-		curl_setopt($ch, CURLOPT_URL, 'https://api.bankly.com.br/baas/banklist');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		
-		$req = curl_exec($ch);
-		$err = curl_error($ch);
-
-		if ($err)
-			throw $err;
-		else {
-			$req = json_decode($req);
-			return $req;
-		}
-	} else {
-		$req = file_get_contents('https://api.bankly.com.br/baas/banklist');
-
-		if ($req) {
-			return json_decode($req);
-		} else {
-			throw new Error("Unable to request");
-		}
+	public function bankList() {
+		return $this->_get('/banklist');
 	}
 }
